@@ -21,31 +21,57 @@ package appconf
 
 // An AppConf instance represents a configuration context for an application.
 type AppConf struct {
-	Options   []Option
+	Options   map[string]*Option
 	ConfFiles []string
+	Name      string
+	Author    string
+	Version   string
+	Roaming   bool
 }
 
 // A ConfOption is a functional option for configuring an AppConf context
 type ConfOption func(*AppConf)
 
+// WithAuthor sets the application author or publisher
+func WithAuthor(author string) ConfOption {
+	return func(conf *AppConf) {
+		conf.Author = author
+	}
+}
+
 // WithConfFile sets a single configuration file to be read
 func WithConfFile(confFile string) ConfOption {
-	return func(c *AppConf) {
-		c.ConfFiles = make([]string, 1)
-		c.ConfFiles[0] = confFile
+	return func(conf *AppConf) {
+		conf.ConfFiles = make([]string, 1)
+		conf.ConfFiles[0] = confFile
 	}
 }
 
 // WithConfFiles sets a list of configuration files to be read
 func WithConfFiles(confFiles []string) ConfOption {
-	return func(c *AppConf) {
-		c.ConfFiles = confFiles
+	return func(conf *AppConf) {
+		conf.ConfFiles = confFiles
 	}
 }
 
-// New creates a new AppConf context
-func New(options ...ConfOption) *AppConf {
-	conf := &AppConf{}
+// WithRoaming sets the roaming flag (applies to Windows only)
+func WithRoaming() ConfOption {
+	return func(conf *AppConf) {
+		conf.Roaming = true
+	}
+}
+
+// WithVersion sets the application version
+func WithVersion(version string) ConfOption {
+	return func(conf *AppConf) {
+		conf.Version = version
+	}
+}
+
+// NewConf creates a new AppConf context
+func NewConf(appName string, options ...ConfOption) *AppConf {
+	conf := &AppConf{Name: appName, Roaming: false}
+	conf.Options = make(map[string]*Option)
 	for _, option := range options {
 		option(conf)
 	}
