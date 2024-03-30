@@ -1,5 +1,8 @@
 # Appconf for Go
 
+![Build and Test State](https://github.com/daemotron/appconf/actions/workflows/go.yml/badge.svg?event=push)
+[![Go Reference](https://pkg.go.dev/badge/github.com/daemotron/appconf.svg)](https://pkg.go.dev/github.com/daemotron/appconf)
+
 The appconf module is a lightweight [Go](https://go.dev) configuration solution. It supports
 
 * setting defaults
