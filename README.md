@@ -27,6 +27,6 @@ package main
 import "github.com/daemotron/appconf"
 
 func main() {
-    conf := appconf.New()
+    conf := appconf.NewConf("MyApp")
 }
 ```

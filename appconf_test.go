@@ -1,7 +1,7 @@
 package appconf_test
 
 import (
-	"appconf"
+	"github.com/daemotron/appconf"
 	"testing"
 )
 
