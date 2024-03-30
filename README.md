@@ -18,3 +18,15 @@ go get github.com/daemotron/appconf
 [Viper](https://github.com/spf13/viper) is a highly sophisticated configuration solution, offering
 far more flexibility. However, Viper also comes with a large amount of dependencies, while appconf
 only uses packages from Go's standard library.
+
+## Usage
+
+```go
+package main
+
+import "github.com/daemotron/appconf"
+
+func main() {
+    conf := appconf.New()
+}
+```
