@@ -1,5 +1,7 @@
 package appconf
 
+import "path/filepath"
+
 func (conf AppConf) userDataDir() (string, error) {
 	base, err := getHomeDir()
 	if err != nil {
@@ -13,7 +15,7 @@ func (conf AppConf) siteDataDir(_ bool) (string, error) {
 }
 
 func (conf AppConf) globalDataDir() (string, error) {
-	return conf.siteDataDir()
+	return conf.siteDataDir(false)
 }
 
 func (conf AppConf) userConfigDir() (string, error) {
@@ -29,7 +31,7 @@ func (conf AppConf) siteConfigDir(_ bool) (string, error) {
 }
 
 func (conf AppConf) globalConfigDir() (string, error) {
-	return conf.siteConfigDir()
+	return conf.siteConfigDir(false)
 }
 
 func (conf AppConf) globalCacheDir() (string, error) {
