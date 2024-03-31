@@ -16,7 +16,7 @@ func getHomeDir() (string, error) {
 	return usr.HomeDir, nil
 }
 
-func (conf AppConf) userCacheDir() (string, error) {
+func (conf *AppConf) userCacheDir() (string, error) {
 	base, err := os.UserCacheDir()
 	if err != nil {
 		return "", err

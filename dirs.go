@@ -11,7 +11,7 @@ package appconf
 //
 // For Unix, we follow the XDG spec and support $XDG_DATA_HOME.
 // That means, by default "~/.local/share/<AppName>".
-func (conf AppConf) UserDataDir() (string, error) {
+func (conf *AppConf) UserDataDir() (string, error) {
 	return conf.userDataDir()
 }
 
@@ -24,7 +24,7 @@ func (conf AppConf) UserDataDir() (string, error) {
 //	Windows:    C:\ProgramData\<AppAuthor>\<AppName>   # Hidden, but writeable on Win 7.
 //
 // For Unix, this is using the $XDG_DATA_DIRS[0] default.
-func (conf AppConf) SiteDataDir(multiPath bool) (string, error) {
+func (conf *AppConf) SiteDataDir(multiPath bool) (string, error) {
 	return conf.siteDataDir(multiPath)
 }
 
@@ -37,7 +37,7 @@ func (conf AppConf) SiteDataDir(multiPath bool) (string, error) {
 //	Windows:    C:\ProgramData\<AppAuthor>\<AppName>   # Hidden, but writeable on Win 7.
 //
 // This method is mostly geared towards Unix; on Windows it is identical to [SiteDataDir].
-func (conf AppConf) GlobalDataDir() (string, error) {
+func (conf *AppConf) GlobalDataDir() (string, error) {
 	return conf.globalDataDir()
 }
 
@@ -51,7 +51,7 @@ func (conf AppConf) GlobalDataDir() (string, error) {
 //
 // For Unix, we follow the XDG spec and support $XDG_CONFIG_HOME.
 // That means, by default "~/.config/<AppName>".
-func (conf AppConf) UserConfigDir() (string, error) {
+func (conf *AppConf) UserConfigDir() (string, error) {
 	return conf.userConfigDir()
 }
 
@@ -64,7 +64,7 @@ func (conf AppConf) UserConfigDir() (string, error) {
 //	Windows:    same as SiteDataDir
 //
 // For Unix, this is using the $XDG_CONFIG_DIRS[0] default, if conf.Multi = False
-func (conf AppConf) SiteConfigDir(multiPath bool) (string, error) {
+func (conf *AppConf) SiteConfigDir(multiPath bool) (string, error) {
 	return conf.siteConfigDir(multiPath)
 }
 
@@ -77,7 +77,7 @@ func (conf AppConf) SiteConfigDir(multiPath bool) (string, error) {
 //	Windows:    same as SiteConfigDir
 //
 // This method is mostly geared towards Unix; on Windows it is identical to SiteDataDir.
-func (conf AppConf) GlobalConfigDir() (string, error) {
+func (conf *AppConf) GlobalConfigDir() (string, error) {
 	return conf.globalConfigDir()
 }
 
@@ -91,7 +91,7 @@ func (conf AppConf) GlobalConfigDir() (string, error) {
 //
 // For Unix, we follow the XDG spec and support $XDG_CACHE_HOME.
 // That means, by default "~/.cache/<AppName>"
-func (conf AppConf) UserCacheDir() (string, error) {
+func (conf *AppConf) UserCacheDir() (string, error) {
 	return conf.userCacheDir()
 }
 
@@ -104,7 +104,7 @@ func (conf AppConf) UserCacheDir() (string, error) {
 //	Windows:    same as [UserCacheDir]
 //
 // This method is mostly geared towards Unix; on Windows it is identical to SiteDataDir.
-func (conf AppConf) GlobalCacheDir() (string, error) {
+func (conf *AppConf) GlobalCacheDir() (string, error) {
 	return conf.globalCacheDir()
 }
 
@@ -119,7 +119,7 @@ func (conf AppConf) GlobalCacheDir() (string, error) {
 // For Unix, we follow this Debian proposal <https://wiki.debian.org/XDGBaseDirectorySpecification#state>
 // to extend the XDG spec and support $XDG_STATE_HOME.
 // That means, by default "~/.local/state/<AppName>".
-func (conf AppConf) UserStateDir() (string, error) {
+func (conf *AppConf) UserStateDir() (string, error) {
 	return conf.userStateDir()
 }
 
@@ -130,6 +130,6 @@ func (conf AppConf) UserStateDir() (string, error) {
 //	macOS:      ~/Library/Logs/<AppName>
 //	Unix:       ~/.cache/<AppName>/log  # or under $XDG_CACHE_HOME if defined
 //	Windows:    C:\Users\<username>\AppData\Local\<AppAuthor>\<AppName>\Logs
-func (conf AppConf) UserLogDir() (string, error) {
+func (conf *AppConf) UserLogDir() (string, error) {
 	return conf.userLogDir()
 }

@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func (conf AppConf) userDataDir() (string, error) {
+func (conf *AppConf) userDataDir() (string, error) {
 	var base string
 	var err error
 	base = os.Getenv("XDG_DATA_HOME")
@@ -23,7 +23,7 @@ func (conf AppConf) userDataDir() (string, error) {
 	return filepath.Join(base, conf.Name, conf.Version), nil
 }
 
-func (conf AppConf) siteDataDir(multiPath bool) (string, error) {
+func (conf *AppConf) siteDataDir(multiPath bool) (string, error) {
 	xdg := os.Getenv("XDG_DATA_DIRS")
 	if !multiPath {
 		if xdg == "" || strings.Contains(xdg, "/usr/local/share") {
@@ -45,11 +45,11 @@ func (conf AppConf) siteDataDir(multiPath bool) (string, error) {
 	return strings.Join(xdgs, fmt.Sprintf("%c", os.PathListSeparator)), nil
 }
 
-func (conf AppConf) globalDataDir() (string, error) {
+func (conf *AppConf) globalDataDir() (string, error) {
 	return filepath.Join("/var", "lib", conf.Name), nil
 }
 
-func (conf AppConf) userConfigDir() (string, error) {
+func (conf *AppConf) userConfigDir() (string, error) {
 	base, err := os.UserConfigDir()
 	if err != nil {
 		return "", err
@@ -57,7 +57,7 @@ func (conf AppConf) userConfigDir() (string, error) {
 	return filepath.Join(base, conf.Name, conf.Version), nil
 }
 
-func (conf AppConf) siteConfigDir(multiPath bool) (string, error) {
+func (conf *AppConf) siteConfigDir(multiPath bool) (string, error) {
 	xdg := os.Getenv("XDG_CONFIG_DIRS")
 	if xdg == "" {
 		return filepath.Join("/etc", "xdg", conf.Name, conf.Version), nil
@@ -76,15 +76,15 @@ func (conf AppConf) siteConfigDir(multiPath bool) (string, error) {
 	return strings.Join(xdgs, fmt.Sprintf("%c", os.PathListSeparator)), nil
 }
 
-func (conf AppConf) globalConfigDir() (string, error) {
+func (conf *AppConf) globalConfigDir() (string, error) {
 	return filepath.Join("/etc", conf.Name), nil
 }
 
-func (conf AppConf) globalCacheDir() (string, error) {
+func (conf *AppConf) globalCacheDir() (string, error) {
 	return filepath.Join("/var", "cache", conf.Name), nil
 }
 
-func (conf AppConf) userStateDir() (string, error) {
+func (conf *AppConf) userStateDir() (string, error) {
 	var base string
 	var err error
 	base = os.Getenv("XDG_STATE_HOME")
@@ -98,7 +98,7 @@ func (conf AppConf) userStateDir() (string, error) {
 	return filepath.Join(base, conf.Name, conf.Version), nil
 }
 
-func (conf AppConf) userLogDir() (string, error) {
+func (conf *AppConf) userLogDir() (string, error) {
 	base, err := conf.userCacheDir()
 	if err != nil {
 		return "", err

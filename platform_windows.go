@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 )
 
-func (conf AppConf) userDataDir() (string, error) {
+func (conf *AppConf) userDataDir() (string, error) {
 	var err error
 	var base string
 	if conf.Roaming {
@@ -19,7 +19,7 @@ func (conf AppConf) userDataDir() (string, error) {
 	return filepath.Join(base, conf.Author, conf.Name, conf.Version), err
 }
 
-func (conf AppConf) siteDataDir(_ bool) (string, error) {
+func (conf *AppConf) siteDataDir(_ bool) (string, error) {
 	base := os.Getenv("ALLUSERSPROFILE")
 	if base == "" {
 		return "", ErrAllUsersProfileNotDefined
@@ -27,23 +27,23 @@ func (conf AppConf) siteDataDir(_ bool) (string, error) {
 	return filepath.Join(base, conf.Author, conf.Name, conf.Version), nil
 }
 
-func (conf AppConf) globalDataDir() (string, error) {
+func (conf *AppConf) globalDataDir() (string, error) {
 	return conf.siteDataDir(false)
 }
 
-func (conf AppConf) userConfigDir() (string, error) {
+func (conf *AppConf) userConfigDir() (string, error) {
 	return conf.userDataDir()
 }
 
-func (conf AppConf) siteConfigDir(multiPath bool) (string, error) {
+func (conf *AppConf) siteConfigDir(multiPath bool) (string, error) {
 	return conf.siteDataDir(multiPath)
 }
 
-func (conf AppConf) globalConfigDir() (string, error) {
+func (conf *AppConf) globalConfigDir() (string, error) {
 	return conf.siteConfigDir(false)
 }
 
-func (conf AppConf) userCacheDir() (string, error) {
+func (conf *AppConf) userCacheDir() (string, error) {
 	base, err := os.UserCacheDir()
 	if err != nil {
 		return "", err
@@ -51,15 +51,15 @@ func (conf AppConf) userCacheDir() (string, error) {
 	return filepath.Join(base, conf.Author, conf.Name, conf.Version, "Cache"), err
 }
 
-func (conf AppConf) globalCacheDir() (string, error) {
+func (conf *AppConf) globalCacheDir() (string, error) {
 	return conf.userCacheDir()
 }
 
-func (conf AppConf) userStateDir() (string, error) {
+func (conf *AppConf) userStateDir() (string, error) {
 	return conf.userDataDir()
 }
 
-func (conf AppConf) userLogDir() (string, error) {
+func (conf *AppConf) userLogDir() (string, error) {
 	base, err := conf.userDataDir()
 	if err != nil {
 		return "", err
