@@ -58,3 +58,93 @@ func TestNewConfWithVersion(t *testing.T) {
 		t.Fatalf("Configuration app version: %v (expected: '1.0')", conf.Version)
 	}
 }
+
+func TestNewOption(t *testing.T) {
+	conf := appconf.NewConf("Gizmo")
+	err := conf.NewOption("foo")
+	if err != nil {
+		t.Fatalf("Unexpected error: %v", err)
+	}
+	_, ok := conf.Options["foo"]
+	if !ok {
+		t.Fatalf("Key of registered option not found")
+	}
+}
+
+func TestNewOptionWithDefaultValue(t *testing.T) {
+	conf := appconf.NewConf("Gizmo")
+	err := conf.NewOption("foo", appconf.WithDefaultValue(appconf.StringValue("bar")))
+	if err != nil {
+		t.Fatalf("Unexpected error: %v", err)
+	}
+	val, ok := conf.Options["foo"]
+	if !ok {
+		t.Fatalf("Key of registered option not found")
+	}
+	if val.Default.String() != "bar" {
+		t.Fatalf("Default value not correct: %s (expected: 'bar')", val.Default.String())
+	}
+	if val.Value.String() != "bar" {
+		t.Fatalf("Current value not correct: %s (expected: 'bar')", val.Value.String())
+	}
+}
+
+func TestNewOptionWithFlag(t *testing.T) {
+	conf := appconf.NewConf("Gizmo")
+	err := conf.NewOption("foo", appconf.WithFlag("f"))
+	if err != nil {
+		t.Fatalf("Unexpected error: %v", err)
+	}
+	val, ok := conf.Options["foo"]
+	if !ok {
+		t.Fatalf("Key of registered option not found")
+	}
+	if val.Flag != "f" {
+		t.Fatalf("Flag not correct: %s (expected: 'f')", val.Flag)
+	}
+}
+
+func TestNewOptionWithJson(t *testing.T) {
+	conf := appconf.NewConf("Gizmo")
+	err := conf.NewOption("foo", appconf.WithJson("app.foo"))
+	if err != nil {
+		t.Fatalf("Unexpected error: %v", err)
+	}
+	val, ok := conf.Options["foo"]
+	if !ok {
+		t.Fatalf("Key of registered option not found")
+	}
+	if val.Json != "app.foo" {
+		t.Fatalf("Flag not correct: %s (expected: 'app.foo')", val.Flag)
+	}
+}
+
+func TestNewOptionWithEnv(t *testing.T) {
+	conf := appconf.NewConf("Gizmo")
+	err := conf.NewOption("foo", appconf.WithEnv("FOO"))
+	if err != nil {
+		t.Fatalf("Unexpected error: %v", err)
+	}
+	val, ok := conf.Options["foo"]
+	if !ok {
+		t.Fatalf("Key of registered option not found")
+	}
+	if val.Env != "FOO" {
+		t.Fatalf("Flag not correct: %s (expected: 'FOO')", val.Flag)
+	}
+}
+
+func TestNewOptionWithHelp(t *testing.T) {
+	conf := appconf.NewConf("Gizmo")
+	err := conf.NewOption("foo", appconf.WithHelp("foo help text"))
+	if err != nil {
+		t.Fatalf("Unexpected error: %v", err)
+	}
+	val, ok := conf.Options["foo"]
+	if !ok {
+		t.Fatalf("Key of registered option not found")
+	}
+	if val.Help != "foo help text" {
+		t.Fatalf("Flag not correct: %s (expected: 'foo help text')", val.Flag)
+	}
+}

@@ -58,3 +58,9 @@ type Option struct {
 	Env     string // Env represents the option's environment variable
 	Help    string // Help represents a help string describing the option
 }
+
+// NewOption creates a new configuration option
+func NewOption(key string) *Option {
+	option := &Option{Key: key}
+	return option
+}
