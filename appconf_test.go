@@ -81,11 +81,11 @@ func TestNewOptionWithDefaultValue(t *testing.T) {
 	if !ok {
 		t.Fatalf("Key of registered option not found")
 	}
-	if val.Default.String() != "bar" {
-		t.Fatalf("Default value not correct: %s (expected: 'bar')", val.Default.String())
+	if val.Default.ToString() != "bar" {
+		t.Fatalf("Default value not correct: %s (expected: 'bar')", val.Default.ToString())
 	}
-	if val.Value.String() != "bar" {
-		t.Fatalf("Current value not correct: %s (expected: 'bar')", val.Value.String())
+	if val.Value.ToString() != "bar" {
+		t.Fatalf("Current value not correct: %s (expected: 'bar')", val.Value.ToString())
 	}
 }
 
