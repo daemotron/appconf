@@ -19,7 +19,7 @@ func TraverseJsonFile(data interface{}, prefix string) (map[string]Value, error)
 			if err != nil {
 				return nil, err
 			}
-			result = mergeMaps(result, res)
+			result = MergeMaps(result, res)
 		}
 	case []interface{}:
 		for i, val := range value {
@@ -28,7 +28,7 @@ func TraverseJsonFile(data interface{}, prefix string) (map[string]Value, error)
 			if err != nil {
 				return nil, err
 			}
-			result = mergeMaps(result, res)
+			result = MergeMaps(result, res)
 		}
 	case int:
 		key := strings.TrimSuffix(prefix, ".")
