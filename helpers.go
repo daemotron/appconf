@@ -3,12 +3,11 @@ package appconf
 import "math"
 
 const (
-	floatMaxUlp  = 2
-	floatEpsilon = 1e-9
+	floatMaxUlp = 2
 )
 
-// MergeMaps merges two maps
-func MergeMaps[K comparable, V any](maps ...map[K]V) map[K]V {
+// mergeMaps merges two maps
+func mergeMaps[K comparable, V any](maps ...map[K]V) map[K]V {
 	out := map[K]V{}
 	for _, m := range maps {
 		for k, v := range m {
@@ -18,8 +17,17 @@ func MergeMaps[K comparable, V any](maps ...map[K]V) map[K]V {
 	return out
 }
 
-// AlmostEqual conducts a combined epsilon / ULP comparison for float64 numbers
-func AlmostEqual(f1 float64, f2 float64) bool {
+// getEpsilon computes a matching epsilon for float64
+func getEpsilon() float64 {
+	var d float64 = 1
+	for (1.0 + d/2) != 1.0 {
+		d = d / 2
+	}
+	return d
+}
+
+// almostEqual conducts a combined epsilon / ULP comparison for float64 numbers
+func almostEqual(f1 float64, f2 float64) bool {
 	if math.IsNaN(f1) || math.IsNaN(f2) || math.IsInf(f1, 0) || math.IsInf(f2, 0) {
 		return false
 	}
@@ -31,8 +39,8 @@ func AlmostEqual(f1 float64, f2 float64) bool {
 	if b1 == b2 {
 		return true
 	}
-	delta := f1 - f2
-	if delta <= (floatEpsilon * floatMaxUlp) {
+	delta := math.Abs(f1 - f2)
+	if delta <= (getEpsilon() * floatMaxUlp) {
 		return true
 	}
 	if b1 > b2 && (b1-b2 <= floatMaxUlp) {
