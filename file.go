@@ -51,7 +51,7 @@ func (conf *AppConf) UpdateFromFiles() error {
 		return err
 	}
 	for _, file := range cfgFiles {
-		err = conf.UpdateFromJsonFile(file)
+		err = conf.updateFromJsonFile(file)
 		if err != nil {
 			return err
 		}
