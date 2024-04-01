@@ -88,3 +88,11 @@ func TestUserLogDir(t *testing.T) {
 		t.Fatalf(`Unexpected error: %v`, err)
 	}
 }
+
+func TestConfigDirs(t *testing.T) {
+	app := setup()
+	_, err := app.ConfigDirs(true)
+	if err != nil {
+		t.Fatalf(`Unexpected error: %v`, err)
+	}
+}

@@ -1,5 +1,11 @@
 package appconf
 
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
 // UserDataDir returns the full path to the user-specific directory for this application
 //
 // Typical user data directories are:
@@ -132,4 +138,32 @@ func (conf *AppConf) UserStateDir() (string, error) {
 //	Windows:    C:\Users\<username>\AppData\Local\<AppAuthor>\<AppName>\Logs
 func (conf *AppConf) UserLogDir() (string, error) {
 	return conf.userLogDir()
+}
+
+// ConfigDirs returns the list of all possible configuration dirs for this application,
+// combining UserConfigDir, SiteConfigDir and GlobalConfigDir.
+func (conf *AppConf) ConfigDirs(multi bool) ([]string, error) {
+	var candidate string
+	var err error
+	var dirs []string
+	candidate, err = conf.UserConfigDir()
+	if err != nil {
+		return nil, err
+	}
+	dirs = append(dirs, candidate)
+	candidate, err = conf.SiteConfigDir(multi)
+	if err != nil {
+		return nil, err
+	}
+	if multi {
+		dirs = append(dirs, strings.Split(candidate, fmt.Sprintf("%c", os.PathListSeparator))...)
+	} else {
+		dirs = append(dirs, candidate)
+	}
+	candidate, err = conf.GlobalConfigDir()
+	if err != nil {
+		return nil, err
+	}
+	dirs = append(dirs, candidate)
+	return dirs, nil
 }
