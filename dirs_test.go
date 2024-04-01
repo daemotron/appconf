@@ -51,7 +51,7 @@ func TestSiteConfigDir(t *testing.T) {
 
 func TestGlobalConfigDir(t *testing.T) {
 	app := setup()
-	_, err := app.GlobalConfigDir()
+	_, err := app.GlobalConfigDir(true)
 	if err != nil {
 		t.Fatalf(`Unexpected error: %v`, err)
 	}
