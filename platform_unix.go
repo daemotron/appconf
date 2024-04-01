@@ -76,7 +76,12 @@ func (conf *AppConf) siteConfigDir(multiPath bool) (string, error) {
 	return strings.Join(xdgs, fmt.Sprintf("%c", os.PathListSeparator)), nil
 }
 
-func (conf *AppConf) globalConfigDir() (string, error) {
+func (conf *AppConf) globalConfigDir(multiPath bool) (string, error) {
+	if multiPath {
+		return strings.Join(
+			[]string{filepath.Join("/etc", conf.Name), filepath.Join("/etc", conf.Author)},
+			fmt.Sprintf("%c", os.PathListSeparator)), nil
+	}
 	return filepath.Join("/etc", conf.Name), nil
 }
 

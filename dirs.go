@@ -83,8 +83,8 @@ func (conf *AppConf) SiteConfigDir(multiPath bool) (string, error) {
 //	Windows:    same as SiteConfigDir
 //
 // This method is mostly geared towards Unix; on Windows it is identical to SiteDataDir.
-func (conf *AppConf) GlobalConfigDir() (string, error) {
-	return conf.globalConfigDir()
+func (conf *AppConf) GlobalConfigDir(multiPath bool) (string, error) {
+	return conf.globalConfigDir(multiPath)
 }
 
 // UserCacheDir returns the full path to the user-specific cache dir for this application.
@@ -142,7 +142,7 @@ func (conf *AppConf) UserLogDir() (string, error) {
 
 // ConfigDirs returns the list of all possible configuration dirs for this application,
 // combining UserConfigDir, SiteConfigDir and GlobalConfigDir.
-func (conf *AppConf) ConfigDirs(multi bool) ([]string, error) {
+func (conf *AppConf) ConfigDirs(multiPath bool) ([]string, error) {
 	var candidate string
 	var err error
 	var dirs []string
@@ -151,16 +151,16 @@ func (conf *AppConf) ConfigDirs(multi bool) ([]string, error) {
 		return nil, err
 	}
 	dirs = append(dirs, candidate)
-	candidate, err = conf.SiteConfigDir(multi)
+	candidate, err = conf.SiteConfigDir(multiPath)
 	if err != nil {
 		return nil, err
 	}
-	if multi {
+	if multiPath {
 		dirs = append(dirs, strings.Split(candidate, fmt.Sprintf("%c", os.PathListSeparator))...)
 	} else {
 		dirs = append(dirs, candidate)
 	}
-	candidate, err = conf.GlobalConfigDir()
+	candidate, err = conf.GlobalConfigDir(multiPath)
 	if err != nil {
 		return nil, err
 	}

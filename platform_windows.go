@@ -35,11 +35,11 @@ func (conf *AppConf) userConfigDir() (string, error) {
 	return conf.userDataDir()
 }
 
-func (conf *AppConf) siteConfigDir(multiPath bool) (string, error) {
-	return conf.siteDataDir(multiPath)
+func (conf *AppConf) siteConfigDir(_ bool) (string, error) {
+	return conf.siteDataDir(false)
 }
 
-func (conf *AppConf) globalConfigDir() (string, error) {
+func (conf *AppConf) globalConfigDir(_ bool) (string, error) {
 	return conf.siteConfigDir(false)
 }
 

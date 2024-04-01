@@ -30,7 +30,7 @@ func (conf *AppConf) siteConfigDir(_ bool) (string, error) {
 	return filepath.Join("/Library", "Preferences", conf.Name, conf.Version), nil
 }
 
-func (conf *AppConf) globalConfigDir() (string, error) {
+func (conf *AppConf) globalConfigDir(_ bool) (string, error) {
 	return conf.siteConfigDir(false)
 }
 
