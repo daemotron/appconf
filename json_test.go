@@ -1,8 +1,7 @@
-package appconf_test
+package appconf
 
 import (
 	"encoding/json"
-	"github.com/daemotron/appconf"
 	"os"
 	"strings"
 	"testing"
@@ -27,7 +26,7 @@ func TestTraverseJsonFile(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	result, err := appconf.TraverseJsonFile(data, "")
+	result, err := traverseJsonFile(data, "")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -51,7 +50,7 @@ func TestParseJsonFile(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	result, err := appconf.ParseJsonFile(file.Name())
+	result, err := parseJsonFile(file.Name())
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -75,12 +74,12 @@ func TestUpdateFromJsonFile(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	conf := appconf.NewConf("Gizmo")
-	err = conf.NewOption("server.port", appconf.WithDefaultValue(appconf.IntValue(3000)), appconf.WithJson("server.port"))
+	conf := NewConf("Gizmo")
+	err = conf.NewOption("server.port", WithDefaultValue(IntValue(3000)), WithJson("server.port"))
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	err = conf.UpdateFromJsonFile(file.Name())
+	err = conf.updateFromJsonFile(file.Name())
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}

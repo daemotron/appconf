@@ -1,26 +1,25 @@
-package appconf_test
+package appconf
 
 import (
-	"github.com/daemotron/appconf"
 	"testing"
 )
 
 func TestNewConf(t *testing.T) {
-	conf := appconf.NewConf("Gizmo")
+	conf := NewConf("Gizmo")
 	if conf.Name != "Gizmo" {
 		t.Fatalf("Configuration app name: %v (expected 'Gizmo')", conf.Name)
 	}
 }
 
 func TestNewConfWithAuthor(t *testing.T) {
-	conf := appconf.NewConf("Gizmo", appconf.WithAuthor("Ken"))
+	conf := NewConf("Gizmo", WithAuthor("Ken"))
 	if conf.Author != "Ken" {
 		t.Fatalf("Configuration app author: %v (expected: 'Ken')", conf.Author)
 	}
 }
 
 func TestNewConfWithConfFile(t *testing.T) {
-	conf := appconf.NewConf("Gizmo", appconf.WithConfFile("Foo"))
+	conf := NewConf("Gizmo", WithConfFile("Foo"))
 	if len(conf.ConfFiles) != 1 {
 		t.Fatalf("Configuration file list length: %v (expected: 1)", len(conf.ConfFiles))
 	}
@@ -30,7 +29,7 @@ func TestNewConfWithConfFile(t *testing.T) {
 }
 
 func TestNewConfWithConfFiles(t *testing.T) {
-	conf := appconf.NewConf("Gizmo", appconf.WithConfFiles([]string{"Foo", "Bar", "Baz"}))
+	conf := NewConf("Gizmo", WithConfFiles([]string{"Foo", "Bar", "Baz"}))
 	if len(conf.ConfFiles) != 3 {
 		t.Fatalf("Configuration file list length: %v (expected: 3)", len(conf.ConfFiles))
 	}
@@ -46,21 +45,21 @@ func TestNewConfWithConfFiles(t *testing.T) {
 }
 
 func TestNewConfWithRoaming(t *testing.T) {
-	conf := appconf.NewConf("Gizmo", appconf.WithRoaming())
+	conf := NewConf("Gizmo", WithRoaming())
 	if !conf.Roaming {
 		t.Fatalf("Configuration roaming flag: %v (true expected)", conf.Roaming)
 	}
 }
 
 func TestNewConfWithVersion(t *testing.T) {
-	conf := appconf.NewConf("Gizmo", appconf.WithVersion("1.0"))
+	conf := NewConf("Gizmo", WithVersion("1.0"))
 	if conf.Version != "1.0" {
 		t.Fatalf("Configuration app version: %v (expected: '1.0')", conf.Version)
 	}
 }
 
 func TestNewOption(t *testing.T) {
-	conf := appconf.NewConf("Gizmo")
+	conf := NewConf("Gizmo")
 	err := conf.NewOption("foo")
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
@@ -72,8 +71,8 @@ func TestNewOption(t *testing.T) {
 }
 
 func TestNewOptionWithDefaultValue(t *testing.T) {
-	conf := appconf.NewConf("Gizmo")
-	err := conf.NewOption("foo", appconf.WithDefaultValue(appconf.StringValue("bar")))
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithDefaultValue(StringValue("bar")))
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
 	}
@@ -90,8 +89,8 @@ func TestNewOptionWithDefaultValue(t *testing.T) {
 }
 
 func TestNewOptionWithFlag(t *testing.T) {
-	conf := appconf.NewConf("Gizmo")
-	err := conf.NewOption("foo", appconf.WithFlag("f"))
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithFlag("f"))
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
 	}
@@ -105,8 +104,8 @@ func TestNewOptionWithFlag(t *testing.T) {
 }
 
 func TestNewOptionWithJson(t *testing.T) {
-	conf := appconf.NewConf("Gizmo")
-	err := conf.NewOption("foo", appconf.WithJson("app.foo"))
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithJson("app.foo"))
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
 	}
@@ -120,8 +119,8 @@ func TestNewOptionWithJson(t *testing.T) {
 }
 
 func TestNewOptionWithEnv(t *testing.T) {
-	conf := appconf.NewConf("Gizmo")
-	err := conf.NewOption("foo", appconf.WithEnv("FOO"))
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithEnv("FOO"))
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
 	}
@@ -135,8 +134,8 @@ func TestNewOptionWithEnv(t *testing.T) {
 }
 
 func TestNewOptionWithHelp(t *testing.T) {
-	conf := appconf.NewConf("Gizmo")
-	err := conf.NewOption("foo", appconf.WithHelp("foo help text"))
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithHelp("foo help text"))
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
 	}

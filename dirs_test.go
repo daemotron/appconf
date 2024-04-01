@@ -1,12 +1,11 @@
-package appconf_test
+package appconf
 
 import (
-	"github.com/daemotron/appconf"
 	"testing"
 )
 
-func setup() *appconf.AppConf {
-	return appconf.NewConf("apptest", appconf.WithAuthor("daemotron"), appconf.WithVersion("1.0"))
+func setup() *AppConf {
+	return NewConf("apptest", WithAuthor("daemotron"), WithVersion("1.0"))
 }
 
 func TestUserDataDir(t *testing.T) {
