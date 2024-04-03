@@ -35,6 +35,11 @@ func (conf *AppConf) ConfigFiles() ([]string, error) {
 			}
 		}
 	}
+	for _, cf := range conf.ConfFiles {
+		if isFile(cf) {
+			result = append(result, cf)
+		}
+	}
 	return result, nil
 }
 
