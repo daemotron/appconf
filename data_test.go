@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestStringValueToInt(t *testing.T) {
+func TestAppConf_StringValue_ToInt(t *testing.T) {
 	sv := StringValue("123")
 	intValue, err := sv.ToInt()
 	if err != nil {
@@ -15,7 +15,7 @@ func TestStringValueToInt(t *testing.T) {
 	}
 }
 
-func TestStringValueToFloat64(t *testing.T) {
+func TestAppConf_StringValue_ToFloat64(t *testing.T) {
 	sv := StringValue("123.456")
 	float64Value, err := sv.ToFloat64()
 	if err != nil {
@@ -26,7 +26,7 @@ func TestStringValueToFloat64(t *testing.T) {
 	}
 }
 
-func TestStringValueToBool(t *testing.T) {
+func TestAppConf_StringValue_ToBool(t *testing.T) {
 	sv := StringValue("true")
 	boolValue, err := sv.ToBool()
 	if err != nil {
@@ -37,7 +37,7 @@ func TestStringValueToBool(t *testing.T) {
 	}
 }
 
-func TestIntValueToFloat64(t *testing.T) {
+func TestAppConf_IntValue_ToFloat64(t *testing.T) {
 	iv := IntValue(456)
 	floatValue, err := iv.ToFloat64()
 	if err != nil {
@@ -48,7 +48,7 @@ func TestIntValueToFloat64(t *testing.T) {
 	}
 }
 
-func TestIntValueToBool(t *testing.T) {
+func TestAppConf_IntValue_ToBool(t *testing.T) {
 	iv := IntValue(0)
 	boolValue, err := iv.ToBool()
 	if err != nil {
@@ -59,7 +59,7 @@ func TestIntValueToBool(t *testing.T) {
 	}
 }
 
-func TestIntValueToString(t *testing.T) {
+func TestAppConf_IntValue_ToString(t *testing.T) {
 	iv := IntValue(456)
 	stringValue := iv.ToString()
 	if stringValue != "456" {
@@ -67,7 +67,7 @@ func TestIntValueToString(t *testing.T) {
 	}
 }
 
-func TestFloatValueToBool(t *testing.T) {
+func TestAppConf_FloatValue_ToBool(t *testing.T) {
 	fv := FloatValue(0.0)
 	boolValue, err := fv.ToBool()
 	if err != nil {
@@ -78,7 +78,7 @@ func TestFloatValueToBool(t *testing.T) {
 	}
 }
 
-func TestFloatValueToInt(t *testing.T) {
+func TestAppConf_FloatValue_ToInt(t *testing.T) {
 	fv := FloatValue(456.0)
 	intValue, err := fv.ToInt()
 	if err != nil {
@@ -89,7 +89,7 @@ func TestFloatValueToInt(t *testing.T) {
 	}
 }
 
-func TestFloatValueToString(t *testing.T) {
+func TestAppConf_FloatValue_ToString(t *testing.T) {
 	fv := FloatValue(456.1)
 	stringValue := fv.ToString()
 	if stringValue != "456.1" {

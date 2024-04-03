@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestAlmostEqual(t *testing.T) {
+func TestAppConf_almostEqual(t *testing.T) {
 	type args struct {
 		f1 float64
 		f2 float64
@@ -36,7 +36,7 @@ func TestAlmostEqual(t *testing.T) {
 	}
 }
 
-func TestMergeMaps(t *testing.T) {
+func TestAppConf_mergeMaps(t *testing.T) {
 	type args[K comparable, V any] struct {
 		maps []map[K]V
 	}
@@ -76,7 +76,7 @@ func TestMergeMaps(t *testing.T) {
 	}
 }
 
-func TestGetEpsilon(t *testing.T) {
+func TestAppConf_getEpsilon(t *testing.T) {
 	epsilon := getEpsilon()
 	if !((1.0+epsilon) != 1.0 && (1.0+epsilon/2) == 1.0) {
 		t.Errorf("Epsilon doesn't fulfil requirement 1.0+e != 1.0 && 1.0+e/2 == 1.0 (computed: %v)", epsilon)

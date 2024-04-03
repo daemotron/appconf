@@ -19,7 +19,7 @@ const (
 }`
 )
 
-func Test_traverseJsonFile(t *testing.T) {
+func TestAppConf_traverseJsonFile(t *testing.T) {
 	reader := strings.NewReader(testData)
 	var data interface{}
 	err := json.NewDecoder(reader).Decode(&data)
@@ -35,7 +35,7 @@ func Test_traverseJsonFile(t *testing.T) {
 	}
 }
 
-func Test_parseJsonFile(t *testing.T) {
+func TestAppConf_parseJsonFile(t *testing.T) {
 	file, err := os.CreateTemp("", "test-*.json")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -59,7 +59,7 @@ func Test_parseJsonFile(t *testing.T) {
 	}
 }
 
-func Test_updateFromJsonFile(t *testing.T) {
+func TestAppConf_updateFromJsonFile(t *testing.T) {
 	file, err := os.CreateTemp("", "test-*.json")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)

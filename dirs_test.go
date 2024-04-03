@@ -8,7 +8,7 @@ func setup() *AppConf {
 	return NewConf("apptest", WithAuthor("daemotron"), WithVersion("1.0"))
 }
 
-func TestUserDataDir(t *testing.T) {
+func TestAppConf_UserDataDir(t *testing.T) {
 	app := setup()
 	_, err := app.UserDataDir()
 	if err != nil {
@@ -16,7 +16,7 @@ func TestUserDataDir(t *testing.T) {
 	}
 }
 
-func TestSiteDataDir(t *testing.T) {
+func TestAppConf_SiteDataDir(t *testing.T) {
 	app := setup()
 	_, err := app.SiteDataDir(false)
 	if err != nil {
@@ -24,7 +24,7 @@ func TestSiteDataDir(t *testing.T) {
 	}
 }
 
-func TestGlobalDataDir(t *testing.T) {
+func TestAppConf_GlobalDataDir(t *testing.T) {
 	app := setup()
 	_, err := app.GlobalDataDir()
 	if err != nil {
@@ -32,7 +32,7 @@ func TestGlobalDataDir(t *testing.T) {
 	}
 }
 
-func TestUserConfigDir(t *testing.T) {
+func TestAppConf_UserConfigDir(t *testing.T) {
 	app := setup()
 	_, err := app.UserConfigDir()
 	if err != nil {
@@ -40,7 +40,7 @@ func TestUserConfigDir(t *testing.T) {
 	}
 }
 
-func TestSiteConfigDir(t *testing.T) {
+func TestAppConf_SiteConfigDir(t *testing.T) {
 	app := setup()
 	_, err := app.SiteConfigDir(false)
 	if err != nil {
@@ -48,7 +48,7 @@ func TestSiteConfigDir(t *testing.T) {
 	}
 }
 
-func TestGlobalConfigDir(t *testing.T) {
+func TestAppConf_GlobalConfigDir(t *testing.T) {
 	app := setup()
 	_, err := app.GlobalConfigDir(true)
 	if err != nil {
@@ -56,7 +56,7 @@ func TestGlobalConfigDir(t *testing.T) {
 	}
 }
 
-func TestUserStateDir(t *testing.T) {
+func TestAppConf_UserStateDir(t *testing.T) {
 	app := setup()
 	_, err := app.UserStateDir()
 	if err != nil {
@@ -64,7 +64,7 @@ func TestUserStateDir(t *testing.T) {
 	}
 }
 
-func TestUserCacheDir(t *testing.T) {
+func TestAppConf_UserCacheDir(t *testing.T) {
 	app := setup()
 	_, err := app.UserCacheDir()
 	if err != nil {
@@ -72,7 +72,7 @@ func TestUserCacheDir(t *testing.T) {
 	}
 }
 
-func TestGlobalCacheDir(t *testing.T) {
+func TestAppConf_GlobalCacheDir(t *testing.T) {
 	app := setup()
 	_, err := app.GlobalCacheDir()
 	if err != nil {
@@ -80,7 +80,7 @@ func TestGlobalCacheDir(t *testing.T) {
 	}
 }
 
-func TestUserLogDir(t *testing.T) {
+func TestAppConf_UserLogDir(t *testing.T) {
 	app := setup()
 	_, err := app.UserLogDir()
 	if err != nil {
@@ -88,7 +88,7 @@ func TestUserLogDir(t *testing.T) {
 	}
 }
 
-func TestConfigDirs(t *testing.T) {
+func TestAppConf_ConfigDirs(t *testing.T) {
 	app := setup()
 	_, err := app.ConfigDirs(true)
 	if err != nil {

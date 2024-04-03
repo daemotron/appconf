@@ -4,21 +4,21 @@ import (
 	"testing"
 )
 
-func TestNewConf(t *testing.T) {
+func TestAppConf_NewConf(t *testing.T) {
 	conf := NewConf("Gizmo")
 	if conf.Name != "Gizmo" {
 		t.Fatalf("Configuration app name: %v (expected 'Gizmo')", conf.Name)
 	}
 }
 
-func TestNewConfWithAuthor(t *testing.T) {
+func TestAppConf_NewConf_WithAuthor(t *testing.T) {
 	conf := NewConf("Gizmo", WithAuthor("Ken"))
 	if conf.Author != "Ken" {
 		t.Fatalf("Configuration app author: %v (expected: 'Ken')", conf.Author)
 	}
 }
 
-func TestNewConfWithConfFile(t *testing.T) {
+func TestAppConf_NewConf_WithConfFile(t *testing.T) {
 	conf := NewConf("Gizmo", WithConfFile("Foo"))
 	if len(conf.ConfFiles) != 1 {
 		t.Fatalf("Configuration file list length: %v (expected: 1)", len(conf.ConfFiles))
@@ -28,7 +28,7 @@ func TestNewConfWithConfFile(t *testing.T) {
 	}
 }
 
-func TestNewConfWithConfFiles(t *testing.T) {
+func TestAppConf_NewConf_WithConfFiles(t *testing.T) {
 	conf := NewConf("Gizmo", WithConfFiles([]string{"Foo", "Bar", "Baz"}))
 	if len(conf.ConfFiles) != 3 {
 		t.Fatalf("Configuration file list length: %v (expected: 3)", len(conf.ConfFiles))
@@ -44,21 +44,21 @@ func TestNewConfWithConfFiles(t *testing.T) {
 	}
 }
 
-func TestNewConfWithRoaming(t *testing.T) {
+func TestAppConf_NewConf_WithRoaming(t *testing.T) {
 	conf := NewConf("Gizmo", WithRoaming())
 	if !conf.Roaming {
 		t.Fatalf("Configuration roaming flag: %v (true expected)", conf.Roaming)
 	}
 }
 
-func TestNewConfWithVersion(t *testing.T) {
+func TestAppConf_NewConf_WithVersion(t *testing.T) {
 	conf := NewConf("Gizmo", WithVersion("1.0"))
 	if conf.Version != "1.0" {
 		t.Fatalf("Configuration app version: %v (expected: '1.0')", conf.Version)
 	}
 }
 
-func TestNewOption(t *testing.T) {
+func TestAppConf_NewOption(t *testing.T) {
 	conf := NewConf("Gizmo")
 	err := conf.NewOption("foo")
 	if err != nil {
@@ -70,7 +70,7 @@ func TestNewOption(t *testing.T) {
 	}
 }
 
-func TestNewOptionWithDefaultValue(t *testing.T) {
+func TestAppConf_NewOption_WithDefaultValue(t *testing.T) {
 	conf := NewConf("Gizmo")
 	err := conf.NewOption("foo", WithDefaultValue(StringValue("bar")))
 	if err != nil {
@@ -88,7 +88,7 @@ func TestNewOptionWithDefaultValue(t *testing.T) {
 	}
 }
 
-func TestNewOptionWithFlag(t *testing.T) {
+func TestAppConf_NewOption_WithFlag(t *testing.T) {
 	conf := NewConf("Gizmo")
 	err := conf.NewOption("foo", WithFlag("f"))
 	if err != nil {
@@ -103,7 +103,7 @@ func TestNewOptionWithFlag(t *testing.T) {
 	}
 }
 
-func TestNewOptionWithJson(t *testing.T) {
+func TestAppConf_NewOption_WithJson(t *testing.T) {
 	conf := NewConf("Gizmo")
 	err := conf.NewOption("foo", WithJson("app.foo"))
 	if err != nil {
@@ -118,7 +118,7 @@ func TestNewOptionWithJson(t *testing.T) {
 	}
 }
 
-func TestNewOptionWithEnv(t *testing.T) {
+func TestAppConf_NewOption_WithEnv(t *testing.T) {
 	conf := NewConf("Gizmo")
 	err := conf.NewOption("foo", WithEnv("FOO"))
 	if err != nil {
@@ -133,7 +133,7 @@ func TestNewOptionWithEnv(t *testing.T) {
 	}
 }
 
-func TestNewOptionWithHelp(t *testing.T) {
+func TestAppConf_NewOption_WithHelp(t *testing.T) {
 	conf := NewConf("Gizmo")
 	err := conf.NewOption("foo", WithHelp("foo help text"))
 	if err != nil {
