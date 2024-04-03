@@ -32,7 +32,13 @@ func main() {
     conf := appconf.NewConf("MyApp")
     
     // register configuration option
-    err := conf.NewOption("foo", appconf.WithDefaultValue(appconf.StringValue("bar")))
+    err := conf.NewOption("foo", appconf.WithDefaultString("bar"), appconf.WithFlag("f"))
+    if err != nil {
+        log.Fatalf("Error: %v", err)
+    }
+	
+    // update configuration from files, environment and command line flags
+    err = conf.Update()
     if err != nil {
         log.Fatalf("Error: %v", err)
     }
@@ -61,7 +67,7 @@ and have a name of `config.json`, `conf.json` or `strings.ToLower(conf.Name) + "
 Actually existing configuration files can be listed this way:
 
 ```go
-confFiles, err := conf.ConfigFiles()
+configFiles, err := conf.ConfigFiles()
 ```
 
 ## What about Viper

@@ -158,3 +158,20 @@ func (conf *AppConf) NewOption(key string, options ...OptOption) error {
 	conf.Options[key] = opt
 	return nil
 }
+
+// Update updates options from configuration files, environment variables and command line flags
+func (conf *AppConf) Update() error {
+	err := conf.UpdateFromFiles()
+	if err != nil {
+		return err
+	}
+	err = conf.UpdateFromEnv()
+	if err != nil {
+		return err
+	}
+	err = conf.UpdateFromFlags()
+	if err != nil {
+		return err
+	}
+	return nil
+}
