@@ -147,3 +147,223 @@ func TestAppConf_NewOption_WithHelp(t *testing.T) {
 		t.Fatalf("Flag not correct: %s (expected: 'foo help text')", val.Flag)
 	}
 }
+
+func TestAppConf_GetInt(t *testing.T) {
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithDefaultInt(123))
+	if err != nil {
+		t.Errorf("unexpected error while registering option: %v", err)
+	}
+	val, err := conf.GetInt("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving int value: %v", err)
+	}
+	if val != 123 {
+		t.Errorf("Value incorrect: got %d, expected 123", val)
+	}
+}
+
+func TestAppConf_GetFloat(t *testing.T) {
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithDefaultFloat(123.456))
+	if err != nil {
+		t.Errorf("unexpected error while registering option: %v", err)
+	}
+	val, err := conf.GetFloat("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving float value: %v", err)
+	}
+	if !almostEqual(123.456, val) {
+		t.Errorf("Value incorrect: got %f, expected 123.456", val)
+	}
+}
+func TestAppConf_GetBool(t *testing.T) {
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithDefaultBool(true))
+	if err != nil {
+		t.Errorf("unexpected error while registering option: %v", err)
+	}
+	val, err := conf.GetBool("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving int value: %v", err)
+	}
+	if !val {
+		t.Errorf("Value incorrect: got %t, expected true", val)
+	}
+}
+func TestAppConf_GetString(t *testing.T) {
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithDefaultString("bar"))
+	if err != nil {
+		t.Errorf("unexpected error while registering option: %v", err)
+	}
+	val, err := conf.GetString("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving int value: %v", err)
+	}
+	if val != "bar" {
+		t.Errorf("Value incorrect: got %s, expected 'bar'", val)
+	}
+}
+
+func TestAppConf_SetInt(t *testing.T) {
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithDefaultInt(123))
+	if err != nil {
+		t.Errorf("unexpected error while registering option: %v", err)
+	}
+	err = conf.SetInt("foo", 456)
+	if err != nil {
+		t.Errorf("unexpected error while setting int value: %v", err)
+	}
+	val, err := conf.GetInt("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving int value: %v", err)
+	}
+	def, err := conf.GetDefaultInt("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving default int value: %v", err)
+	}
+	if def != 123 {
+		t.Errorf("Default value incorrect: got %d, expected 123", def)
+	}
+	if val != 456 {
+		t.Errorf("Value incorrect: got %d, expected 456", val)
+	}
+}
+
+func TestAppConf_SetFloat(t *testing.T) {
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithDefaultFloat(123.456))
+	if err != nil {
+		t.Errorf("unexpected error while registering option: %v", err)
+	}
+	err = conf.SetFloat("foo", 234.567)
+	if err != nil {
+		t.Errorf("unexpected error while setting int value: %v", err)
+	}
+	val, err := conf.GetFloat("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving int value: %v", err)
+	}
+	def, err := conf.GetDefaultFloat("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving default int value: %v", err)
+	}
+	if !almostEqual(def, 123.456) {
+		t.Errorf("Default value incorrect: got %f, expected 123.456", def)
+	}
+	if !almostEqual(val, 234.567) {
+		t.Errorf("Value incorrect: got %f, expected 234.567", val)
+	}
+}
+
+func TestAppConf_SetBool(t *testing.T) {
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithDefaultBool(true))
+	if err != nil {
+		t.Errorf("unexpected error while registering option: %v", err)
+	}
+	err = conf.SetBool("foo", false)
+	if err != nil {
+		t.Errorf("unexpected error while setting int value: %v", err)
+	}
+	val, err := conf.GetBool("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving int value: %v", err)
+	}
+	def, err := conf.GetDefaultBool("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving default int value: %v", err)
+	}
+	if !def {
+		t.Errorf("Default value incorrect: got %t, expected true", def)
+	}
+	if val {
+		t.Errorf("Value incorrect: got %t, expected false", val)
+	}
+}
+
+func TestAppConf_SetString(t *testing.T) {
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithDefaultString("bar"))
+	if err != nil {
+		t.Errorf("unexpected error while registering option: %v", err)
+	}
+	err = conf.SetString("foo", "baz")
+	if err != nil {
+		t.Errorf("unexpected error while setting int value: %v", err)
+	}
+	val, err := conf.GetString("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving int value: %v", err)
+	}
+	def, err := conf.GetDefaultString("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving default int value: %v", err)
+	}
+	if def != "bar" {
+		t.Errorf("Default value incorrect: got %s, expected 'bar'", def)
+	}
+	if val != "baz" {
+		t.Errorf("Value incorrect: got %s, expected 'baz'", val)
+	}
+}
+
+func TestAppConf_GetDefaultInt(t *testing.T) {
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithDefaultInt(123))
+	if err != nil {
+		t.Errorf("unexpected error while registering option: %v", err)
+	}
+	val, err := conf.GetDefaultInt("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving int value: %v", err)
+	}
+	if val != 123 {
+		t.Errorf("Value incorrect: got %d, expected 123", val)
+	}
+}
+
+func TestAppConf_GetDefaultFloat(t *testing.T) {
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithDefaultFloat(123.456))
+	if err != nil {
+		t.Errorf("unexpected error while registering option: %v", err)
+	}
+	val, err := conf.GetDefaultFloat("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving float value: %v", err)
+	}
+	if !almostEqual(123.456, val) {
+		t.Errorf("Value incorrect: got %f, expected 123.456", val)
+	}
+}
+func TestAppConf_GetDefaultBool(t *testing.T) {
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithDefaultBool(true))
+	if err != nil {
+		t.Errorf("unexpected error while registering option: %v", err)
+	}
+	val, err := conf.GetDefaultBool("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving int value: %v", err)
+	}
+	if !val {
+		t.Errorf("Value incorrect: got %t, expected true", val)
+	}
+}
+func TestAppConf_GetDefaultString(t *testing.T) {
+	conf := NewConf("Gizmo")
+	err := conf.NewOption("foo", WithDefaultString("bar"))
+	if err != nil {
+		t.Errorf("unexpected error while registering option: %v", err)
+	}
+	val, err := conf.GetDefaultString("foo")
+	if err != nil {
+		t.Errorf("unexpected error while retrieving int value: %v", err)
+	}
+	if val != "bar" {
+		t.Errorf("Value incorrect: got %s, expected 'bar'", val)
+	}
+}

@@ -175,3 +175,143 @@ func (conf *AppConf) Update() error {
 	}
 	return nil
 }
+
+// GetInt returns the integer value associated with a configuration option
+func (conf *AppConf) GetInt(key string) (int, error) {
+	opt, ok := conf.Options[key]
+	if !ok {
+		return 0, ErrOptionDoesNotExist
+	}
+	val, err := opt.Value.ToInt()
+	if err != nil {
+		return 0, err
+	}
+	return val, nil
+}
+
+// GetFloat returns the float value associated with a configuration option
+func (conf *AppConf) GetFloat(key string) (float64, error) {
+	opt, ok := conf.Options[key]
+	if !ok {
+		return 0, ErrOptionDoesNotExist
+	}
+	val, err := opt.Value.ToFloat64()
+	if err != nil {
+		return 0, err
+	}
+	return val, nil
+}
+
+// GetBool returns the bool value associated with a configuration option
+func (conf *AppConf) GetBool(key string) (bool, error) {
+	opt, ok := conf.Options[key]
+	if !ok {
+		return false, ErrOptionDoesNotExist
+	}
+	val, err := opt.Value.ToBool()
+	if err != nil {
+		return false, err
+	}
+	return val, nil
+}
+
+// GetString returns the string value associated with a configuration option
+func (conf *AppConf) GetString(key string) (string, error) {
+	opt, ok := conf.Options[key]
+	if !ok {
+		return "", ErrOptionDoesNotExist
+	}
+	return opt.Value.ToString(), nil
+}
+
+// SetInt sets the integer value associated with a configuration option
+func (conf *AppConf) SetInt(key string, value int) error {
+	opt, ok := conf.Options[key]
+	if !ok {
+		return ErrOptionDoesNotExist
+	}
+	v := IntValue(value)
+	opt.Value = v.Copy()
+	return nil
+}
+
+// SetFloat sets the float64 value associated with a configuration option
+func (conf *AppConf) SetFloat(key string, value float64) error {
+	opt, ok := conf.Options[key]
+	if !ok {
+		return ErrOptionDoesNotExist
+	}
+	v := FloatValue(value)
+	opt.Value = v.Copy()
+	return nil
+}
+
+// SetBool sets the bool value associated with a configuration option
+func (conf *AppConf) SetBool(key string, value bool) error {
+	opt, ok := conf.Options[key]
+	if !ok {
+		return ErrOptionDoesNotExist
+	}
+	v := BoolValue(value)
+	opt.Value = v.Copy()
+	return nil
+}
+
+// SetString sets the string value associated with a configuration option
+func (conf *AppConf) SetString(key string, value string) error {
+	opt, ok := conf.Options[key]
+	if !ok {
+		return ErrOptionDoesNotExist
+	}
+	v := StringValue(value)
+	opt.Value = v.Copy()
+	return nil
+}
+
+// GetDefaultInt returns the default integer value associated with a configuration option
+func (conf *AppConf) GetDefaultInt(key string) (int, error) {
+	opt, ok := conf.Options[key]
+	if !ok {
+		return 0, ErrOptionDoesNotExist
+	}
+	val, err := opt.Default.ToInt()
+	if err != nil {
+		return 0, err
+	}
+	return val, nil
+}
+
+// GetDefaultFloat returns the default float value associated with a configuration option
+func (conf *AppConf) GetDefaultFloat(key string) (float64, error) {
+	opt, ok := conf.Options[key]
+	if !ok {
+		return 0, ErrOptionDoesNotExist
+	}
+	val, err := opt.Default.ToFloat64()
+	if err != nil {
+		return 0, err
+	}
+	return val, nil
+}
+
+// GetDefaultBool returns the default bool value associated with a configuration option
+func (conf *AppConf) GetDefaultBool(key string) (bool, error) {
+	opt, ok := conf.Options[key]
+	if !ok {
+		return false, ErrOptionDoesNotExist
+	}
+	val, err := opt.Default.ToBool()
+	if err != nil {
+		return false, err
+	}
+	return val, nil
+}
+
+// GetDefaultString returns the default string value associated with a configuration option
+func (conf *AppConf) GetDefaultString(key string) (string, error) {
+	opt, ok := conf.Options[key]
+	if !ok {
+		return "", ErrOptionDoesNotExist
+	}
+	return opt.Default.ToString(), nil
+}
