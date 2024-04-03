@@ -51,6 +51,51 @@ func TestAppConf_ConfigFiles(t *testing.T) {
 	}
 }
 
+func TestAppConf_ConfigFiles_WithConfFile(t *testing.T) {
+	file, err := os.CreateTemp("", "test-*.file")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	defer func(file *os.File) {
+		_ = file.Close()
+	}(file)
+	defer func(name string) {
+		_ = os.Remove(name)
+	}(file.Name())
+	conf := NewConf("Gizmo", WithConfFile(file.Name()))
+	cf, err := conf.ConfigFiles()
+	if err != nil {
+		t.Errorf("error while retrieving AppConf.ConfigFiles(): %v", err)
+	}
+	if !contains(cf, file.Name()) {
+		t.Errorf("Couldn't find '%s' in %v", file.Name(), cf)
+	}
+}
+
+func TestAppConf_ConfigFiles_WithConfFiles(t *testing.T) {
+	file, err := os.CreateTemp("", "test-*.file")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	defer func(file *os.File) {
+		_ = file.Close()
+	}(file)
+	defer func(name string) {
+		_ = os.Remove(name)
+	}(file.Name())
+	conf := NewConf("Gizmo", WithConfFiles([]string{file.Name(), "foo.json"}))
+	cf, err := conf.ConfigFiles()
+	if err != nil {
+		t.Errorf("error while retrieving AppConf.ConfigFiles(): %v", err)
+	}
+	if !contains(cf, file.Name()) {
+		t.Errorf("Couldn't find '%s' in %v", file.Name(), cf)
+	}
+	if contains(cf, "foo.json") {
+		t.Errorf("AppConf.ConfigFiles shouldn't contain 'foo.json' (file doesn't exist)")
+	}
+}
+
 func TestAppConf_UpdateFromFiles(t *testing.T) {
 	conf := NewConf("Gizmo")
 	err := conf.UpdateFromFiles()
