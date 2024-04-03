@@ -17,6 +17,15 @@ func mergeMaps[K comparable, V any](maps ...map[K]V) map[K]V {
 	return out
 }
 
+// contains checks whether a collection contains a certain value
+func contains[T comparable](collection []T, value T) bool {
+	flag := false
+	for _, item := range collection {
+		flag = flag || (item == value)
+	}
+	return flag
+}
+
 // getEpsilon computes a matching epsilon for float64
 func getEpsilon() float64 {
 	var d float64 = 1
