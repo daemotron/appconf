@@ -72,7 +72,7 @@ func TestAppConf_NewOption(t *testing.T) {
 
 func TestAppConf_NewOption_WithDefaultValue(t *testing.T) {
 	conf := NewConf("Gizmo")
-	err := conf.NewOption("foo", WithDefaultValue(StringValue("bar")))
+	err := conf.NewOption("foo", WithDefaultString("bar"))
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
 	}

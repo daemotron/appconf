@@ -81,11 +81,39 @@ func NewConf(appName string, options ...AppOption) *AppConf {
 // A OptOption is a functional option for configuring an Option object
 type OptOption func(option *Option)
 
-// WithDefaultValue sets the default value for an option
-func WithDefaultValue(value Value) OptOption {
+// WithDefaultInt sets the default int value for an option
+func WithDefaultInt(value int) OptOption {
 	return func(opt *Option) {
-		opt.Default = value
-		opt.Value = value
+		v := IntValue(value)
+		opt.Default = v.Copy()
+		opt.Value = v.Copy()
+	}
+}
+
+// WithDefaultFloat sets the default float64 value for an option
+func WithDefaultFloat(value float64) OptOption {
+	return func(opt *Option) {
+		v := FloatValue(value)
+		opt.Default = v.Copy()
+		opt.Value = v.Copy()
+	}
+}
+
+// WithDefaultBool sets the default bool value for an option
+func WithDefaultBool(value bool) OptOption {
+	return func(opt *Option) {
+		v := BoolValue(value)
+		opt.Default = v.Copy()
+		opt.Value = v.Copy()
+	}
+}
+
+// WithDefaultString sets the default string value for an option
+func WithDefaultString(value string) OptOption {
+	return func(opt *Option) {
+		v := StringValue(value)
+		opt.Default = v.Copy()
+		opt.Value = v.Copy()
 	}
 }
 
@@ -123,7 +151,7 @@ func (conf *AppConf) NewOption(key string, options ...OptOption) error {
 	if ok {
 		return ErrOptionExists
 	}
-	opt := NewOption(key)
+	opt := createOption(key)
 	for _, option := range options {
 		option(opt)
 	}

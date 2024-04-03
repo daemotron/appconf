@@ -10,3 +10,6 @@ var ErrOptionExists = errors.New("option with this key already exists")
 
 // The ErrInvalidType custom error is raised when a datum cannot be cast
 var ErrInvalidType = errors.New("invalid data type")
+
+// The ErrFlagsAlreadyParsed custom error is raised when flag.Parse() has already been called
+var ErrFlagsAlreadyParsed = errors.New("flags have already been parsed")

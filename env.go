@@ -9,26 +9,29 @@ func (conf *AppConf) UpdateFromEnv() error {
 		if ok {
 			value := StringValue(val)
 			switch option.Default.(type) {
-			case IntValue:
+			case *IntValue:
 				v, err := value.ToInt()
 				if err != nil {
 					return err
 				}
-				conf.Options[optKey].Value = IntValue(v)
-			case FloatValue:
+				iv := IntValue(v)
+				conf.Options[optKey].Value = iv.Copy()
+			case *FloatValue:
 				v, err := value.ToFloat64()
 				if err != nil {
 					return err
 				}
-				conf.Options[optKey].Value = FloatValue(v)
-			case BoolValue:
+				fv := FloatValue(v)
+				conf.Options[optKey].Value = fv.Copy()
+			case *BoolValue:
 				v, err := value.ToBool()
 				if err != nil {
 					return err
 				}
-				conf.Options[optKey].Value = BoolValue(v)
-			case StringValue:
-				conf.Options[optKey].Value = value
+				bv := BoolValue(v)
+				conf.Options[optKey].Value = bv.Copy()
+			case *StringValue:
+				conf.Options[optKey].Value = value.Copy()
 			default:
 				return ErrInvalidType
 			}

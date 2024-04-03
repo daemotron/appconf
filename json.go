@@ -32,16 +32,20 @@ func traverseJsonFile(data interface{}, prefix string) (map[string]Value, error)
 		}
 	case int:
 		key := strings.TrimSuffix(prefix, ".")
-		result[key] = IntValue(value)
+		iv := IntValue(value)
+		result[key] = iv.Copy()
 	case string:
 		key := strings.TrimSuffix(prefix, ".")
-		result[key] = StringValue(value)
+		sv := StringValue(value)
+		result[key] = sv.Copy()
 	case float64:
 		key := strings.TrimSuffix(prefix, ".")
-		result[key] = FloatValue(value)
+		fv := FloatValue(value)
+		result[key] = fv.Copy()
 	case bool:
 		key := strings.TrimSuffix(prefix, ".")
-		result[key] = BoolValue(value)
+		bv := BoolValue(value)
+		result[key] = bv.Copy()
 	default:
 		return nil, ErrInvalidType
 	}

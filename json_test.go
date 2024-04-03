@@ -75,7 +75,7 @@ func TestAppConf_updateFromJsonFile(t *testing.T) {
 		t.Fatalf("unexpected error: %v", err)
 	}
 	conf := NewConf("Gizmo")
-	err = conf.NewOption("server.port", WithDefaultValue(IntValue(3000)), WithJson("server.port"))
+	err = conf.NewOption("server.port", WithDefaultInt(3000), WithJson("server.port"))
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
